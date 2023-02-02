@@ -2,5 +2,5 @@
 dependencies:
     - ../korau-opus
     - ../korau-mod
-
+    - ../korau-midi
 
