@@ -1,4 +1,6 @@
 #name: deps
 dependencies:
-    - ../korge-mymodule
+    - ../korau-opus
+    - ../korau-mod
+
 

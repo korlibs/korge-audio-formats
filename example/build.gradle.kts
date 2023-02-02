@@ -7,7 +7,7 @@ plugins {
 }
 
 korge {
-    id = "org.korge.samples.mymodule"
+    id = "org.korge.samples.korauaudioformats"
 
 // To enable all targets at once
 
