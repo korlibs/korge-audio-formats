@@ -3,11 +3,5 @@ import com.soywiz.korge.scene.*
 import com.soywiz.korge.view.*
 
 suspend fun main() = Korge {
-    sceneContainer().changeTo({ MainMyModuleScene() })
-}
-
-class MainMyModuleScene : Scene() {
-    override suspend fun SContainer.sceneMain() {
-        text("pending create a sample...")
-    }
+    sceneContainer().changeTo({ MainMODScene() })
 }
