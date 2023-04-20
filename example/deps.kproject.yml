@@ -1,6 +1,5 @@
 #name: deps
 dependencies:
-    - ../korau-opus
-    - ../korau-mod
-    - ../korau-midi
-
+- ../korau-opus
+- ../korau-mod
+- ../korau-midi

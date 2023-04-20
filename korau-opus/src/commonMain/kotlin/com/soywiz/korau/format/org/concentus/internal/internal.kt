@@ -1,4 +1,4 @@
-package com.soywiz.korau.format.org.concentus.internal
+package korlibs.audio.format.org.concentus.internal
 
 import kotlin.math.*
 

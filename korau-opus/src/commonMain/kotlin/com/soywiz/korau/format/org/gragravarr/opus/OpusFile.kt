@@ -11,12 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.opus
+package korlibs.audio.format.org.gragravarr.opus
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.ogg.audio.*
-import com.soywiz.korio.lang.*
-import com.soywiz.korio.stream.*
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.ogg.audio.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
 
 /**
  * This is a wrapper around an OggFile that lets you

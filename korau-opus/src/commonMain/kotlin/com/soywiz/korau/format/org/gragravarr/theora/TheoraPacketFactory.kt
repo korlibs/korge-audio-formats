@@ -11,12 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.theora
+package korlibs.audio.format.org.gragravarr.theora
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.theora.TheoraPacket.Companion.TYPE_COMMENTS
-import com.soywiz.korau.format.org.gragravarr.theora.TheoraPacket.Companion.TYPE_IDENTIFICATION
-import com.soywiz.korau.format.org.gragravarr.theora.TheoraPacket.Companion.TYPE_SETUP
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.theora.TheoraPacket.Companion.TYPE_COMMENTS
+import korlibs.audio.format.org.gragravarr.theora.TheoraPacket.Companion.TYPE_IDENTIFICATION
+import korlibs.audio.format.org.gragravarr.theora.TheoraPacket.Companion.TYPE_SETUP
 
 /**
  * Identifies the right kind of [TheoraPacket] for a given

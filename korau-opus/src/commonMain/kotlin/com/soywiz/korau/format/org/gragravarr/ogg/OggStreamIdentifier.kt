@@ -11,14 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.ogg
+package korlibs.audio.format.org.gragravarr.ogg
 
-import com.soywiz.korau.format.org.gragravarr.flac.*
-import com.soywiz.korau.format.org.gragravarr.opus.*
-import com.soywiz.korau.format.org.gragravarr.skeleton.*
-import com.soywiz.korau.format.org.gragravarr.speex.*
-import com.soywiz.korau.format.org.gragravarr.theora.*
-import com.soywiz.korau.format.org.gragravarr.vorbis.*
+import korlibs.audio.format.org.gragravarr.flac.*
+import korlibs.audio.format.org.gragravarr.opus.*
+import korlibs.audio.format.org.gragravarr.skeleton.*
+import korlibs.audio.format.org.gragravarr.speex.*
+import korlibs.audio.format.org.gragravarr.theora.*
+import korlibs.audio.format.org.gragravarr.vorbis.*
 
 /**
  * Detector for identifying the kind of data stored in a given stream.

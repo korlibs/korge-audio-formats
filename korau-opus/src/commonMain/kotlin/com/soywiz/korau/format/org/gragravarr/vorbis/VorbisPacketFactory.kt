@@ -11,12 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.vorbis
+package korlibs.audio.format.org.gragravarr.vorbis
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.vorbis.VorbisPacket.Companion.TYPE_COMMENTS
-import com.soywiz.korau.format.org.gragravarr.vorbis.VorbisPacket.Companion.TYPE_INFO
-import com.soywiz.korau.format.org.gragravarr.vorbis.VorbisPacket.Companion.TYPE_SETUP
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.vorbis.VorbisPacket.Companion.TYPE_COMMENTS
+import korlibs.audio.format.org.gragravarr.vorbis.VorbisPacket.Companion.TYPE_INFO
+import korlibs.audio.format.org.gragravarr.vorbis.VorbisPacket.Companion.TYPE_SETUP
 
 /**
  * Identifies the right kind of [VorbisPacket] for a given

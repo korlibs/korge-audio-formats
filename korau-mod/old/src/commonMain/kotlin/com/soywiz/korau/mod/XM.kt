@@ -1,11 +1,11 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
-import com.soywiz.kds.*
-import com.soywiz.kmem.*
-import com.soywiz.korau.format.*
-import com.soywiz.korau.sound.*
-import com.soywiz.korio.file.*
-import com.soywiz.korio.lang.*
+import korlibs.datastructure.*
+import korlibs.memory.*
+import korlibs.audio.format.*
+import korlibs.audio.sound.*
+import korlibs.io.file.*
+import korlibs.io.lang.*
 import kotlin.math.*
 import kotlin.random.Random
 

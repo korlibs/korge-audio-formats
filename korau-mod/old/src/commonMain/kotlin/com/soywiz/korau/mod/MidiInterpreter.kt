@@ -1,4 +1,4 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
 class MidiInterpreter(
 	val midi: Midi,

@@ -58,7 +58,7 @@
    The latter both reduces CPU time and makes the algorithm more SIMD-friendly.
 */
 
-package com.soywiz.korau.format.org.concentus
+package korlibs.audio.format.org.concentus
 
 //public class SpeexResampler
 //{

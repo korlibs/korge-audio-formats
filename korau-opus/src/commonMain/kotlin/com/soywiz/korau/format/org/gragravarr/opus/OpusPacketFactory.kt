@@ -11,11 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.opus
+package korlibs.audio.format.org.gragravarr.opus
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.opus.OpusPacket.Companion.MAGIC_HEADER_BYTES
-import com.soywiz.korau.format.org.gragravarr.opus.OpusPacket.Companion.MAGIC_TAGS_BYTES
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.opus.OpusPacket.Companion.MAGIC_HEADER_BYTES
+import korlibs.audio.format.org.gragravarr.opus.OpusPacket.Companion.MAGIC_TAGS_BYTES
 
 /**
  * Identifies the right kind of [OpusPacket] for a given

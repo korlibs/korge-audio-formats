@@ -1,24 +1,24 @@
-import com.soywiz.klock.measureTime
-import com.soywiz.klock.milliseconds
-import com.soywiz.klock.seconds
-import com.soywiz.klock.toTimeString
-import com.soywiz.korau.format.defaultAudioFormats
-import com.soywiz.korau.mod.MOD
-import com.soywiz.korau.mod.S3M
-import com.soywiz.korau.mod.XM
-import com.soywiz.korau.sound.infinitePlaybackTimes
-import com.soywiz.korau.sound.readMusic
-import com.soywiz.korev.Key
-import com.soywiz.korge.input.keys
-import com.soywiz.korge.scene.Scene
-import com.soywiz.korge.ui.UIText
-import com.soywiz.korge.ui.uiComboBox
-import com.soywiz.korge.ui.uiText
-import com.soywiz.korge.ui.uiVerticalStack
-import com.soywiz.korge.view.SContainer
-import com.soywiz.korge.view.addUpdater
-import com.soywiz.korio.async.launchImmediately
-import com.soywiz.korio.file.std.resourcesVfs
+import korlibs.time.measureTime
+import korlibs.time.milliseconds
+import korlibs.time.seconds
+import korlibs.time.toTimeString
+import korlibs.audio.format.defaultAudioFormats
+import korlibs.audio.mod.MOD
+import korlibs.audio.mod.S3M
+import korlibs.audio.mod.XM
+import korlibs.audio.sound.infinitePlaybackTimes
+import korlibs.audio.sound.readMusic
+import korlibs.event.Key
+import korlibs.korge.input.keys
+import korlibs.korge.scene.Scene
+import korlibs.korge.ui.UIText
+import korlibs.korge.ui.uiComboBox
+import korlibs.korge.ui.uiText
+import korlibs.korge.ui.uiVerticalStack
+import korlibs.korge.view.SContainer
+import korlibs.korge.view.addUpdater
+import korlibs.io.async.launchImmediately
+import korlibs.io.file.std.resourcesVfs
 
 class MainMODScene : Scene() {
     override suspend fun SContainer.sceneMain() {
@@ -40,7 +40,7 @@ class MainMODScene : Scene() {
         var channel = sound.play(times = infinitePlaybackTimes)
         //val channel = sound.play(times = 2.playbackTimes)
         lateinit var timer: UIText
-        uiVerticalStack(width = 400.0) {
+        uiVerticalStack(width = 400f) {
             uiComboBox(items = soundsFolder.listNames().filter { it.substringAfterLast('.').lowercase() in defaultAudioFormats.extensions }).also {
                 it.onSelectionUpdate { box ->
                     launchImmediately {

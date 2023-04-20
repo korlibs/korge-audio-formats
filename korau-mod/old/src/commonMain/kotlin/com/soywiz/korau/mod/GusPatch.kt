@@ -1,9 +1,9 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
-import com.soywiz.korio.file.*
-import com.soywiz.korio.lang.*
-import com.soywiz.korio.stream.*
-import com.soywiz.korio.file.*
+import korlibs.io.file.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
+import korlibs.io.file.*
 
 // http://www.onicos.com/staff/iz/formats/guspat.html
 

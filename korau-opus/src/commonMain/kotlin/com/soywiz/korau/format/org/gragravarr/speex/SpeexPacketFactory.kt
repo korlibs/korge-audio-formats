@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.speex
+package korlibs.audio.format.org.gragravarr.speex
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.ogg.*
 
 /**
  * Identifies the right kind of [SpeexPacket] for a given

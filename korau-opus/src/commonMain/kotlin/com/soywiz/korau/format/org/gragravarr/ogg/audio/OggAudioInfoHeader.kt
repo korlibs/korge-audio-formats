@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.ogg.audio
+package korlibs.audio.format.org.gragravarr.ogg.audio
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.ogg.*
 
 /**
  * Common interface for the Info (Information /

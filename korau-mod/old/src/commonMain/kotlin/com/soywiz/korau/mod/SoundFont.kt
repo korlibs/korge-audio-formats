@@ -1,4 +1,4 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
 interface SoundFont {
 	operator fun get(patch: Int): SoundPatch

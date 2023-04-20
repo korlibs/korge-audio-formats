@@ -11,13 +11,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.ogg
+package korlibs.audio.format.org.gragravarr.ogg
 
-import com.soywiz.kmem.*
-import com.soywiz.korau.format.org.concentus.internal.*
-import com.soywiz.korio.*
-import com.soywiz.korio.lang.*
-import com.soywiz.korio.stream.*
+import korlibs.memory.*
+import korlibs.audio.format.org.concentus.internal.*
+import korlibs.io.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
 
 /**
  * Utilities for working with IO streams, such

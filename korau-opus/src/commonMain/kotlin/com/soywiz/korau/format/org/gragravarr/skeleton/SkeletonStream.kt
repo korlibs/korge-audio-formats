@@ -11,9 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.skeleton
+package korlibs.audio.format.org.gragravarr.skeleton
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.ogg.*
 
 /**
  * A Skeleton Stream is made up of a single Fishead,

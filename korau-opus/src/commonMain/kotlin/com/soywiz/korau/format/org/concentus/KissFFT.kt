@@ -35,7 +35,7 @@
 
 /* This code is originally from Mark Borgerding's KISS-FFT but has been
    heavily modified to better suit Opus */
-package com.soywiz.korau.format.org.concentus
+package korlibs.audio.format.org.concentus
 
 internal object KissFFT {
     //public final int SAMP_MAX = 2147483647;

@@ -1,15 +1,15 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
-import com.soywiz.kds.lock.*
-import com.soywiz.kmem.*
-import com.soywiz.korau.format.*
-import com.soywiz.korau.sound.*
-import com.soywiz.korio.concurrent.*
-import com.soywiz.korio.file.*
-import com.soywiz.korio.file.*
-import com.soywiz.korio.lang.*
-import com.soywiz.korio.stream.*
-import com.soywiz.korio.util.*
+import korlibs.datastructure.lock.*
+import korlibs.memory.*
+import korlibs.audio.format.*
+import korlibs.audio.sound.*
+import korlibs.io.concurrent.*
+import korlibs.io.file.*
+import korlibs.io.file.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
+import korlibs.io.util.*
 import kotlin.math.*
 import kotlin.random.Random
 

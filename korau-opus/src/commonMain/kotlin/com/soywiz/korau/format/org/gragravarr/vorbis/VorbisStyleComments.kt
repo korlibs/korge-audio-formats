@@ -11,11 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.vorbis
+package korlibs.audio.format.org.gragravarr.vorbis
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.ogg.audio.*
-import com.soywiz.korio.stream.*
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.ogg.audio.*
+import korlibs.io.stream.*
 
 /**
  * General class for all Vorbis-style comments/tags, as used

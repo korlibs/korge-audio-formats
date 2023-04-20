@@ -1,10 +1,10 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
-import com.soywiz.kds.*
-import com.soywiz.kmem.*
-import com.soywiz.korio.file.*
-import com.soywiz.korio.lang.*
-import com.soywiz.korio.stream.*
+import korlibs.datastructure.*
+import korlibs.memory.*
+import korlibs.io.file.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
 
 suspend fun VfsFile.readSoundFont2(): SoundFont = SoundFont2Reader().apply { read(readAsSyncStream()) }
 

@@ -11,10 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.skeleton
+package korlibs.audio.format.org.gragravarr.skeleton
 
-import com.soywiz.klock.*
-import com.soywiz.korau.format.org.gragravarr.ogg.*
+import korlibs.time.*
+import korlibs.audio.format.org.gragravarr.ogg.*
 
 /**
  * The Fishead (note - one h) provides some basic information

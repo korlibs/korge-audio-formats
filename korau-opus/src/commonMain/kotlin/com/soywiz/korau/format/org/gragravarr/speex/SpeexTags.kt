@@ -11,12 +11,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.speex
+package korlibs.audio.format.org.gragravarr.speex
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.ogg.audio.*
-import com.soywiz.korau.format.org.gragravarr.vorbis.*
-import com.soywiz.korio.stream.*
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.ogg.audio.*
+import korlibs.audio.format.org.gragravarr.vorbis.*
+import korlibs.io.stream.*
 
 /**
  * This is a [VorbisComments] with an Speex metadata

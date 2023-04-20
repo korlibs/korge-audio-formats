@@ -11,11 +11,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.soywiz.korau.format.org.gragravarr.skeleton
+package korlibs.audio.format.org.gragravarr.skeleton
 
-import com.soywiz.korau.format.org.gragravarr.ogg.*
-import com.soywiz.korau.format.org.gragravarr.skeleton.SkeletonPacket.Companion.MAGIC_FISBONE_BYTES
-import com.soywiz.korau.format.org.gragravarr.skeleton.SkeletonPacket.Companion.MAGIC_FISHEAD_BYTES
+import korlibs.audio.format.org.gragravarr.ogg.*
+import korlibs.audio.format.org.gragravarr.skeleton.SkeletonPacket.Companion.MAGIC_FISBONE_BYTES
+import korlibs.audio.format.org.gragravarr.skeleton.SkeletonPacket.Companion.MAGIC_FISHEAD_BYTES
 
 /**
  * Identifies the right kind of [SkeletonPacket] for a given

@@ -32,9 +32,9 @@
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.soywiz.korau.format.org.concentus
+package korlibs.audio.format.org.concentus
 
-import com.soywiz.kmem.*
+import korlibs.memory.*
 
 internal class CeltEncoder {
 

@@ -1,9 +1,9 @@
-package com.soywiz.korau.mod
+package korlibs.audio.mod
 
-import com.soywiz.kds.*
-import com.soywiz.kmem.*
-import com.soywiz.korio.lang.*
-import com.soywiz.korio.stream.*
+import korlibs.datastructure.*
+import korlibs.memory.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
 
 // http://www.music.mcgill.ca/~ich/classes/mumt306/StandardMIDIfileformat.html
 
