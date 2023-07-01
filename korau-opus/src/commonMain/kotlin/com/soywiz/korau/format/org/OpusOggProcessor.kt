@@ -2,11 +2,17 @@ package com.soywiz.korau.format.org
 
 import korlibs.audio.format.org.concentus.*
 import korlibs.audio.sound.*
+import korlibs.datastructure.*
 import korlibs.io.lang.*
 import korlibs.io.stream.*
 import korlibs.memory.*
 import kotlin.math.*
 
+// https://xiph.org/ogg/doc/oggstream.html
+// https://xiph.org/ogg/doc/framing.html
+// https://wiki.xiph.org/OggOpus
+// https://datatracker.ietf.org/doc/html/rfc3533
+// https://datatracker.ietf.org/doc/html/rfc7845
 class OpusOggProcessor(
     val channels: Int = 2,
     val rate: Int = 48000,
@@ -26,8 +32,36 @@ class OpusOggProcessor(
     var vendor: String? = null
     var tags: List<String> = emptyList()
     val samples = AudioSamplesDeque(channels)
+    var lastPcmSamplePosition = 0L
+    val filePositions = doubleArrayListOf()
+    val pcmPositions = doubleArrayListOf()
 
-    suspend fun readAndDecodePacket(s: AsyncStream): Int {
+    suspend fun seek(s: AsyncStream, positionInSamples: Long) {
+        samples.clear()
+
+        //if (positionInSamples == 0L) return
+
+        if (filePositions.isEmpty()) {
+            s.position = 0L
+            while (s.getAvailable() > 0) {
+                val lastPosition = s.position
+                readAndDecodePacket(s, decode = false)
+                filePositions.add(lastPosition.toDouble())
+                pcmPositions.add(lastPcmSamplePosition.toDouble())
+            }
+        }
+
+        //println("filePositions: $filePositions")
+        //println("pcmPositions: $pcmPositions")
+
+        val index = genericBinarySearchLeft(0, filePositions.size) { pcmPositions[it].compareTo(positionInSamples) }
+        if (index in 0 until filePositions.size) {
+            s.position = filePositions[index].toLong()
+            //println(" SEEK to ${s.position} to get positionInSamples=$positionInSamples")
+        }
+    }
+
+    suspend fun readAndDecodePacket(s: AsyncStream, decode: Boolean = true): Int {
         val packet = OggProcessor.readPacket(s)
         val ss = packet.data.openFastStream()
         //println(packet)
@@ -35,6 +69,8 @@ class OpusOggProcessor(
         val opusHead = ss.readStringz(8)
         when (opusHead) {
             "OpusHead" -> {
+                lastPcmSamplePosition = 0L
+
                 val version = ss.readU8()
                 val channelCount = ss.readU8()
                 val preSkip = ss.readU16LE()
@@ -52,7 +88,8 @@ class OpusOggProcessor(
                 //println("head=$head")
 
                 //decoder.opus_decoder_init(head.inputSampleRate, head.channelCount)
-                decoder.opus_decoder_init(rate, channels)
+                //decoder.opus_decoder_init(rate, channels)
+                decoder.opus_decoder_init(rate, head.channelCount)
 
                 return 0
             }
@@ -66,64 +103,37 @@ class OpusOggProcessor(
                 return 0
             }
             else -> {
-                val pcmSamplePosition = packet.granulePosition - head.preSkip
-                //println("pcmSamplePosition=$pcmSamplePosition, granulePosition=${packet.granulePosition}, preSkip=${head.preSkip}")
-                // 'PCM sample position' = 'granule position' - 'pre-skip' .
-                var pos = 0
+                val pcmSamplePosition = (packet.granulePosition / head.channelCount) - head.preSkip
+                lastPcmSamplePosition = pcmSamplePosition
+                if (decode) {
+                    var pos = 0
+                    val ichannels = head.channelCount
+                    val spcm = ShortArray(max(rate / 400, 5760) * ichannels)
 
-                //println(packet.segmentsSize.map { it.toInt() })
-                //val packetInfo = OpusPacketInfo.parseOpusPacket(packet.data, 0, 8)
-                //println("packetInfo=$packetInfo")
-                //println(OpusPacketInfo.getEncoderMode(packet.data, 0))
-                //val audioData = OpusAudioData(packet.data)
-                //println("audioData=${audioData.numberOfFrames} : ${audioData.numberOfSamples}")
+                    var samplesDecoded = 0
+                    for (n in 0 until packet.segmentsSize.size) {
+                        val segmentSize = packet.segmentsSize[n].toInt() and 0xFF
 
-                //val dataPacket = packet.data.sliceArray(8 until packet.data.size)
+                        pending.append(packet.data, pos, segmentSize)
 
-                //val TOC = packet.data[0]
+                        if (segmentSize < 255) {
+                            val packetData = pending.toByteArray()
+                            pending.clear()
 
-                //println(decoder.frame_size)
-                //val spcm = ShortArray(min(decoder.frame_size, 5760) * channels)
-                val ichannels = head.channelCount
-                val spcm = ShortArray(max(rate / 400, 5760) * ichannels)
+                            val read =
+                                decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / ichannels, false)
+                            samples.write(AudioSamplesInterleaved(ichannels, read, spcm))
+                            samplesDecoded += read
+                            //println("READ: $read")
+                        }
 
-                //println("DATA_SIZE: ${packet.data.size}")
-                //println("OPUS_HEAD: ${head}")
-
-                //val deque = AudioSamplesDeque(channels)
-
-                var samplesDecoded = 0
-                for (n in 0 until packet.segmentsSize.size) {
-                    val segmentSize = packet.segmentsSize[n].toInt() and 0xFF
-                    //println("SEGMENT[$n]: $segmentSize")
-
-                    pending.append(packet.data, pos, segmentSize)
-
-                    if (segmentSize < 255) {
-                        val packetData = pending.toByteArray()
-                        pending.clear()
-
-                        val read = decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / ichannels, false)
-                        samples.write(AudioSamplesInterleaved(ichannels, read, spcm))
-                        samplesDecoded += read
-                        //println("READ: $read")
+                        pos += segmentSize
                     }
 
-                    //val info = OpusPacketInfo.parseOpusPacket(segmentData, 0, min(1275, packet.data.size))
-                    //println("info=$info : ${info.Frames.size}")
-
-                    //for (frame in info.Frames) {
-                    //}
-
-                    pos += segmentSize
+                    return samplesDecoded
+                } else {
+                    return -1
                 }
-
-                //println("Fs=${Fs}")
-                //val data = deque.toData(Fs)
-                //data.toWav().writeToFile("/tmp/output.wav")
-                return samplesDecoded
-                //error("$opusHead != OpusHead/OpusTags")
-                //val dataLen = data.read(dataPacket, 0, dataPacket.size)
             }
         }
     }
