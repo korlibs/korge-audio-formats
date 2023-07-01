@@ -32,7 +32,7 @@ open class OpusAudioFormatBase : AudioFormat("opus") {
                 val lastChunk = data.sliceStart(kotlin.math.max(0L, data.getLength() - lastChunkSize)).readAll()
                 val index = lastChunk.lastIndexOf(OggS)
                 if (index >= 0) {
-                    val packet = OggProcessor.readPacket(lastChunk.openAsync().sliceStart(index.toLong()))
+                    val packet = OpusOggProcessor.readPacket(lastChunk.openAsync().sliceStart(index.toLong()))
                     //val pcmSamplePosition = (packet.granulePosition / header.channelCount) - header.preSkip
                     val pcmSamplePosition = packet.granulePosition - header.preSkip
                     totalTime = (pcmSamplePosition.toDouble() / 48000.toDouble()).seconds
