@@ -11,11 +11,6 @@ import kotlin.test.*
 
 
 class OpusJvmTest {
-    // https://xiph.org/ogg/doc/oggstream.html
-    // https://xiph.org/ogg/doc/framing.html
-    // https://wiki.xiph.org/OggOpus
-    // https://datatracker.ietf.org/doc/html/rfc3533
-    // https://datatracker.ietf.org/doc/html/rfc7845
     @Test
     fun test() = suspendTest {
         val processor = OpusOggProcessor(2)

@@ -5,6 +5,7 @@ import korlibs.audio.mod.*
 import korlibs.audio.sound.*
 import korlibs.io.file.std.*
 import korlibs.korge.scene.*
+import korlibs.korge.time.*
 import korlibs.korge.view.*
 import korlibs.time.*
 
@@ -18,7 +19,12 @@ class MainOpusScene : Scene() {
         //println(": " + MP3.tryReadInfo(resourcesVfs["sounds/8Khz-Mono.opus"].open()))
         //println(": " + MP3Decoder.tryReadInfo(resourcesVfs["sounds/8Khz-Mono.opus"].open()))
         //val data = resourcesVfs["sounds/8Khz-Mono.opus"].readSound(AudioDecodingProps(formats = OPUS)).toAudioData()
-        val data = resourcesVfs["sounds/8Khz-Mono.opus"].readSound()
-        data.play()
+        println(OPUS.tryReadInfo(resourcesVfs["sounds/8Khz-Mono.opus"].open(), AudioDecodingProps(exactTimings = true)))
+        //val data = resourcesVfs["sounds/8Khz-Mono.opus"].readSound()
+        val data = resourcesVfs["sounds/8Khz-Mono.opus"].readMusic()
+        val channel = data.play()
+        timeout(4.seconds) {
+            channel.current = 15.seconds
+        }
     }
 }
