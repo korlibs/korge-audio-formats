@@ -84,9 +84,11 @@ class OpusOggProcessor(
 
                 //println(decoder.frame_size)
                 //val spcm = ShortArray(min(decoder.frame_size, 5760) * channels)
-                val spcm = ShortArray(max(rate / 400, 5760) * channels)
+                val ichannels = head.channelCount
+                val spcm = ShortArray(max(rate / 400, 5760) * ichannels)
 
                 //println("DATA_SIZE: ${packet.data.size}")
+                //println("OPUS_HEAD: ${head}")
 
                 //val deque = AudioSamplesDeque(channels)
 
@@ -101,8 +103,8 @@ class OpusOggProcessor(
                         val packetData = pending.toByteArray()
                         pending.clear()
 
-                        val read = decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / channels, false)
-                        samples.write(AudioSamplesInterleaved(channels, read, spcm))
+                        val read = decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / ichannels, false)
+                        samples.write(AudioSamplesInterleaved(ichannels, read, spcm))
                         samplesDecoded += read
                         //println("READ: $read")
                     }

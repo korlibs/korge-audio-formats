@@ -1,8 +1,6 @@
 package com.soywiz.korau.format.org
 
-import korlibs.io.lang.*
 import korlibs.io.stream.*
-import korlibs.io.util.*
 import korlibs.memory.*
 import kotlinx.coroutines.flow.*
 
@@ -61,15 +59,4 @@ object OggProcessor {
         //    println("bytes=${bytes.toString(Charsets.UTF8)}")
         //}
     }
-}
-
-
-fun FastByteArrayInputStream.readStringzFix(charset: Charset = UTF8): String {
-    var out = ByteArrayBuilder()
-    while (hasMore) {
-        val byte = readU8().toByte()
-        if (byte == 0.toByte()) break
-        out.append(byte)
-    }
-    return out.toByteArray().toString(charset)
 }

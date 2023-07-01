@@ -3,5 +3,6 @@ import korlibs.korge.scene.*
 import korlibs.korge.view.*
 
 suspend fun main() = Korge {
-    sceneContainer().changeTo({ MainMODScene() })
+    sceneContainer().changeTo { MainOpusScene() }
+    //sceneContainer().changeTo { MainMODScene() }
 }

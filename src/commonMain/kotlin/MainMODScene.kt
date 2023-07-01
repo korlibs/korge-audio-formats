@@ -3,6 +3,7 @@ import korlibs.time.milliseconds
 import korlibs.time.seconds
 import korlibs.time.toTimeString
 import korlibs.audio.format.defaultAudioFormats
+import korlibs.audio.format.opus.*
 import korlibs.audio.mod.MOD
 import korlibs.audio.mod.S3M
 import korlibs.audio.mod.XM
@@ -23,7 +24,7 @@ import korlibs.io.file.std.resourcesVfs
 class MainMODScene : Scene() {
     override suspend fun SContainer.sceneMain() {
         measureTime({
-            defaultAudioFormats.register(MOD, S3M, XM)
+            defaultAudioFormats.register(MOD, S3M, XM, OPUS)
         }) {
             println("Registered sound module track formats in $it")
         }
@@ -46,6 +47,7 @@ class MainMODScene : Scene() {
                     launchImmediately {
                         channel.stop()
                         val sound = measureTime({ soundsFolder[box.selectedItem!!].readMusic() }) {
+                        //val sound = measureTime({ soundsFolder[box.selectedItem!!].readSound() }) {
                             println("Read music file in $it")
                         }
                         channel = sound.play(times = infinitePlaybackTimes)
