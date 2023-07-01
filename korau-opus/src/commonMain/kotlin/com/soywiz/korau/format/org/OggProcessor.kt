@@ -31,7 +31,8 @@ object OggProcessor {
     suspend fun readPacket(s: AsyncStream): OggPacket {
         //println("AVAILABLE: " + s.getAvailable())
         val ss = s.readBytesExact(27).openFastStream()
-        if (ss.readStringz(4) != "OggS") error("Not an Ogg stream")
+        val magic = ss.readStringz(4)
+        if (magic != "OggS") error("Not an Ogg stream but '$magic'")
         val version = ss.readU8()
         val headerType = ss.readU8()
         val granulePosition = ss.readS64LE()

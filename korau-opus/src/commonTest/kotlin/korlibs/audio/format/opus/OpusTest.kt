@@ -9,7 +9,7 @@ import korlibs.io.file.std.*
 import kotlin.test.*
 
 class OpusTest {
-	val smallFile = "T2dnUwACAAAAAAAAAABxNV5nAAAAAIjXVq0BE09wdXNIZWFkAQI4AUSsAAAAAABP" +
+	val smallFile = ("T2dnUwACAAAAAAAAAABxNV5nAAAAAIjXVq0BE09wdXNIZWFkAQI4AUSsAAAAAABP" +
 			"Z2dTAAAAAAAAAAAAAHE1XmcBAAAAiVqDTwP///5PcHVzVGFncw0AAABsaWJvcHVz" +
 			"IDEuMi4xAgAAACYAAABFTkNPREVSPW9wdXNlbmMgZnJvbSBvcHVzLXRvb2xzIDAu" +
 			"MS4xMBsAAABFTkNPREVSX09QVElPTlM9LS1iaXRyYXRlIDYAAAAAAAAAAAAAAAAA" +
@@ -50,7 +50,7 @@ class OpusTest {
 			"aAiwWrfHlv5nolFElKEGf1fzj8wjzgiwWrfKwPtOeP3cI/RXOS7F4kSYGYAIsFq3" +
 			"x5b+Z6JWPUWmf3AvuvzgoAiwWrfHlv5nolt4B37dw5ALoojvW8peCLBNCQT1UJzi" +
 			"Em9R0GstK8H2YKvSTEhPZ2dTAAS4vAAAAAAAAHE1XmcDAAAAKYx7ZAEcCLZbLKqn" +
-			"sQc44eEK/Bb0IzlokzjwLaO7vH+sjQ==".fromBase64()
+			"sQc44eEK/Bb0IzlokzjwLaO7vH+sjQ==").fromBase64()
 
 	@Test
 	fun name() = suspendTest {

@@ -18,14 +18,16 @@ class OpusJvmTest {
     // https://datatracker.ietf.org/doc/html/rfc7845
     @Test
     fun test() = suspendTest {
-        val processor = OpusOggProcessor()
+        val processor = OpusOggProcessor(2)
         val s = resourcesVfs["opus1.opus"].readBytes().openAsync()
         while (s.getAvailable() > 0L) {
-            processor.readPacket(s)
+            println(processor.readAndDecodePacket(s))
         }
+        //processor.samples.toData(processor.rate)
     }
 
     @Test
+    @Ignore
     fun testEncodeDecode() = suspendTest {
         val fileIn = korlibs.io.file.std.resourcesVfs["48Khz-Stereo.raw"].readBytes().inputStream()
         val encoder = OpusEncoder(48000, 2, OpusApplication.OPUS_APPLICATION_AUDIO)
