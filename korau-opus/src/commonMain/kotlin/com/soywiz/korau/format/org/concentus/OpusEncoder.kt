@@ -416,7 +416,7 @@ class OpusEncoder {
         if (Fs != 48000 && Fs != 24000 && Fs != 16000 && Fs != 12000 && Fs != 8000 || channels != 1 && channels != 2
             || application == OpusApplication.OPUS_APPLICATION_UNIMPLEMENTED
         ) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         this.reset()
@@ -579,7 +579,7 @@ class OpusEncoder {
             || 400 * frame_size < this.sampleRate
             || max_data_bytes <= 0
         ) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         silk_enc = this.SilkEncoder
@@ -1634,7 +1634,7 @@ class OpusEncoder {
            the decoder to call the PLC */
         if (enc.tell() > (max_data_bytes - 1) * 8) {
             if (max_data_bytes < 2) {
-                return OpusError.OPUS_BUFFER_TOO_SMALL
+                return OpusError.OPUS_BUFFER_TOO_SMALL()
             }
             data[data_ptr + 1] = 0
             ret = 1

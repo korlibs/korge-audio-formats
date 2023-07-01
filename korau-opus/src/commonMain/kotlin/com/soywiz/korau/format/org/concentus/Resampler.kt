@@ -65,7 +65,7 @@ internal object Resampler {
 	/// <param name="R"></param>
 	/// <returns></returns>
 	private fun rateID(R: Int): Int {
-		return ((R shr 12) - if (R > 16000) 1 else 0 shr if (R > 24000) 1 else 0) - 1
+		return ((R shr 12) - (if (R > 16000) 1 else 0) shr (if (R > 24000) 1 else 0)) - 1
 	}
 
 	/// <summary>

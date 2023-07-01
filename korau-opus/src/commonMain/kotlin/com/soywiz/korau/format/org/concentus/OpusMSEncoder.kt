@@ -236,7 +236,7 @@ class OpusMSEncoder private constructor(nb_streams: Int, nb_coupled_streams: Int
         if (channels > 255 || channels < 1 || coupled_streams > streams
             || streams < 1 || coupled_streams < 0 || streams > 255 - coupled_streams
         ) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         this.layout.nb_channels = channels
@@ -257,7 +257,7 @@ class OpusMSEncoder private constructor(nb_streams: Int, nb_coupled_streams: Int
             i++
         }
         if (OpusMultistream.validate_layout(this.layout) == 0 || validate_encoder_layout(this.layout) == 0) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         encoder_ptr = 0
@@ -305,7 +305,7 @@ class OpusMSEncoder private constructor(nb_streams: Int, nb_coupled_streams: Int
         streams.Val = 0
         coupled_streams.Val = 0
         if (channels > 255 || channels < 1) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
         this.lfe_stream = -1
         if (mapping_family == 0) {
@@ -476,7 +476,7 @@ class OpusMSEncoder private constructor(nb_streams: Int, nb_coupled_streams: Int
         }
 
         if (400 * frame_size < Fs) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
         /* Validate frame_size before using it to allocate stack space.
            This mirrors the checks in opus_encode[_float](). */
@@ -484,13 +484,13 @@ class OpusMSEncoder private constructor(nb_streams: Int, nb_coupled_streams: Int
             && 100 * frame_size != Fs && 50 * frame_size != Fs
             && 25 * frame_size != Fs && 50 * frame_size != 3 * Fs
         ) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         /* Smallest packet the encoder can produce. */
         smallest_packet = this.layout.nb_streams * 2 - 1
         if (max_data_bytes < smallest_packet) {
-            return OpusError.OPUS_BUFFER_TOO_SMALL
+            return OpusError.OPUS_BUFFER_TOO_SMALL()
         }
         buf = ShortArray(2 * frame_size)
 

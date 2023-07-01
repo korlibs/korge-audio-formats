@@ -166,17 +166,17 @@ class OpusMSDecoder private constructor(nb_streams: Int, nb_coupled_streams: Int
             do_plc = 1
         }
         if (len < 0) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
         if (do_plc == 0 && len < 2 * this.layout.nb_streams - 1) {
-            return OpusError.OPUS_INVALID_PACKET
+            OpusError.OPUS_INVALID_PACKET()
         }
         if (do_plc == 0) {
             val ret = opus_multistream_packet_validate(data, data_ptr, len, this.layout.nb_streams, Fs)
             if (ret < 0) {
                 return ret
             } else if (ret > frame_size) {
-                return OpusError.OPUS_BUFFER_TOO_SMALL
+                return OpusError.OPUS_BUFFER_TOO_SMALL()
             }
         }
         s = 0
@@ -333,7 +333,7 @@ class OpusMSDecoder private constructor(nb_streams: Int, nb_coupled_streams: Int
             while (s < nb_streams) {
                 val tmp_samples: Int
                 if (len <= 0) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    OpusError.OPUS_INVALID_PACKET()
                 }
 
                 count = OpusPacketInfo.opus_packet_parse_impl(
@@ -346,7 +346,7 @@ class OpusMSDecoder private constructor(nb_streams: Int, nb_coupled_streams: Int
 
                 tmp_samples = OpusPacketInfo.getNumSamples(data, data_ptr, packet_offset.Val, Fs)
                 if (s != 0 && samples != tmp_samples) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    OpusError.OPUS_INVALID_PACKET()
                 }
                 samples = tmp_samples
                 data_ptr += packet_offset.Val

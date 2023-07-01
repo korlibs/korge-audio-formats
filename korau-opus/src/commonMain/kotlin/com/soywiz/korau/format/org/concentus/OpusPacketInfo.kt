@@ -38,7 +38,7 @@ import korlibs.memory.*
 import korlibs.audio.format.org.concentus.internal.*
 import korlibs.io.lang.*
 
-class OpusPacketInfo private constructor(
+data class OpusPacketInfo private constructor(
     /**
      * The Table of Contents byte for this packet. Contains info about modes, frame length, etc.
      */
@@ -46,7 +46,7 @@ class OpusPacketInfo private constructor(
     /**
      * The list of subframes in this packet
      */
-    var Frames: List<Array<Byte>>,
+    var Frames: List<ByteArray>,
     /**
      * The index of the start of the payload within the packet
      */
@@ -92,10 +92,10 @@ class OpusPacketInfo private constructor(
 
             // Since packet_parse_impl has created deep copies of each frame, we can return them safely from this function without
             // worrying about variable scoping or side effects
-            val copiedFrames = ArrayList<Array<Byte>>()
+            val copiedFrames = ArrayList<ByteArray>()
             for (c in frames.indices) {
                 // Java does not let us unbox an array (?) so we have to copy the bytes _again
-                val convertedFrame = Array<Byte>(frames[c].size) { frames[c]!![it] }
+                val convertedFrame = ByteArray(frames[c].size) { frames[c]!![it] }
                 copiedFrames.add(convertedFrame)
             }
 
@@ -158,17 +158,16 @@ class OpusPacketInfo private constructor(
         fun getNumFrames(packet: ByteArray, packet_offset: Int, len: Int): Int {
             val count: Int
             if (len < 1) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             count = packet[packet_offset] and 0x3
-            return if (count == 0) {
-                1
-            } else if (count != 3) {
-                2
-            } else if (len < 2) {
-                OpusError.OPUS_INVALID_PACKET
-            } else {
-                packet[packet_offset + 1] and 0x3F
+            return when {
+                count == 0 -> 1
+                count != 3 -> 2
+                len < 2 -> {
+                    OpusError.OPUS_INVALID_PACKET()
+                }
+                else -> packet[packet_offset + 1] and 0x3F
             }
         }
 
@@ -186,7 +185,7 @@ class OpusPacketInfo private constructor(
             samples = count * getNumSamplesPerFrame(packet, packet_offset, Fs)
             /* Can't have more than 120 ms */
             return if (samples * 25 > Fs * 3) {
-                OpusError.OPUS_INVALID_PACKET
+                OpusError.OPUS_INVALID_PACKET()
             } else {
                 samples
             }
@@ -271,10 +270,10 @@ class OpusPacketInfo private constructor(
             packet_offset.Val = 0
 
             if (sizes == null || len < 0) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             if (len == 0) {
-                return OpusError.OPUS_INVALID_PACKET
+                return OpusError.OPUS_INVALID_PACKET()
             }
 
             framesize = getNumSamplesPerFrame(data, data_ptr, 48000)
@@ -292,7 +291,7 @@ class OpusPacketInfo private constructor(
                     cbr = 1
                     if (self_delimited == 0) {
                         if (len and 0x1 != 0) {
-                            return OpusError.OPUS_INVALID_PACKET
+                            return OpusError.OPUS_INVALID_PACKET()
                         }
                         last_size = len / 2
                         /* If last_size doesn't fit in size[0], we'll catch it later */
@@ -307,7 +306,7 @@ class OpusPacketInfo private constructor(
                     sizes[sizes_ptr] = boxed_size.Val
                     len -= bytes
                     if (sizes[sizes_ptr] < 0 || sizes[sizes_ptr] > len) {
-                        return OpusError.OPUS_INVALID_PACKET
+                        return OpusError.OPUS_INVALID_PACKET()
                     }
                     data_ptr += bytes
                     last_size = len - sizes[sizes_ptr]
@@ -316,13 +315,13 @@ class OpusPacketInfo private constructor(
                 else -> {
                     /*case 3:*/
                     if (len < 1) {
-                        return OpusError.OPUS_INVALID_PACKET
+                        return OpusError.OPUS_INVALID_PACKET()
                     }
                     /* Number of frames encoded in bits 0 to 5 */
                     ch = Inlines.SignedByteToUnsignedInt(data[data_ptr++])
                     count = ch and 0x3F
                     if (count <= 0 || framesize * count > 5760) {
-                        return OpusError.OPUS_INVALID_PACKET
+                        return OpusError.OPUS_INVALID_PACKET()
                     }
                     len--
                     /* Padding flag is bit 6 */
@@ -331,7 +330,7 @@ class OpusPacketInfo private constructor(
                         do {
                             val tmp: Int
                             if (len <= 0) {
-                                return OpusError.OPUS_INVALID_PACKET
+                                return OpusError.OPUS_INVALID_PACKET()
                             }
                             p = Inlines.SignedByteToUnsignedInt(data[data_ptr++])
                             len--
@@ -341,7 +340,7 @@ class OpusPacketInfo private constructor(
                         } while (p == 255)
                     }
                     if (len < 0) {
-                        return OpusError.OPUS_INVALID_PACKET
+                        return OpusError.OPUS_INVALID_PACKET()
                     }
                     /* VBR flag is bit 7 */
                     cbr = if (ch and 0x80 != 0) 0 else 1
@@ -355,20 +354,20 @@ class OpusPacketInfo private constructor(
                             sizes[sizes_ptr + i] = boxed_size.Val
                             len -= bytes
                             if (sizes[sizes_ptr + i] < 0 || sizes[sizes_ptr + i] > len) {
-                                return OpusError.OPUS_INVALID_PACKET
+                                return OpusError.OPUS_INVALID_PACKET()
                             }
                             data_ptr += bytes
                             last_size -= bytes + sizes[sizes_ptr + i]
                             i++
                         }
                         if (last_size < 0) {
-                            return OpusError.OPUS_INVALID_PACKET
+                            return OpusError.OPUS_INVALID_PACKET()
                         }
                     } else if (self_delimited == 0) {
                         /* CBR case */
                         last_size = len / count
                         if (last_size * count != len) {
-                            return OpusError.OPUS_INVALID_PACKET
+                            return OpusError.OPUS_INVALID_PACKET()
                         }
                         i = 0
                         while (i < count - 1) {
@@ -386,13 +385,13 @@ class OpusPacketInfo private constructor(
                 sizes[sizes_ptr + count - 1] = boxed_size.Val
                 len -= bytes
                 if (sizes[sizes_ptr + count - 1] < 0 || sizes[sizes_ptr + count - 1] > len) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    return OpusError.OPUS_INVALID_PACKET()
                 }
                 data_ptr += bytes
                 /* For CBR packets, apply the size to all the frames. */
                 if (cbr != 0) {
                     if (sizes[sizes_ptr + count - 1] * count > len) {
-                        return OpusError.OPUS_INVALID_PACKET
+                        return OpusError.OPUS_INVALID_PACKET()
                     }
                     i = 0
                     while (i < count - 1) {
@@ -400,14 +399,14 @@ class OpusPacketInfo private constructor(
                         i++
                     }
                 } else if (bytes + sizes[sizes_ptr + count - 1] > last_size) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    return OpusError.OPUS_INVALID_PACKET()
                 }
             } else {
                 /* Because it's not encoded explicitly, it's possible the size of the
                last packet (or all the packets, for the CBR case) is larger than
                1275. Reject them here.*/
                 if (last_size > 1275) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    return OpusError.OPUS_INVALID_PACKET()
                 }
                 sizes[sizes_ptr + count - 1] = last_size.toShort()
             }

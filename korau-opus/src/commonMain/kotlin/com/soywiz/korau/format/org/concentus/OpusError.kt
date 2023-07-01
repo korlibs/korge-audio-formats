@@ -34,6 +34,8 @@
  */
 package korlibs.audio.format.org.concentus
 
+import kotlin.js.*
+
 /// <summary>
 /// Note that since most API-level errors are detected and thrown as
 /// OpusExceptions, direct use of this class is not usually needed
@@ -49,11 +51,15 @@ object OpusError {
      * One or more invalid/out of range arguments
      */
     var OPUS_BAD_ARG = -1
+    @JsName("badArg")
+    fun OPUS_BAD_ARG(message: String = ""): Nothing = error("Bad Arg $message")
 
     /**
      * Not enough bytes allocated in the buffer
      */
     var OPUS_BUFFER_TOO_SMALL = -2
+    @JsName("bufferTooSmall")
+    fun OPUS_BUFFER_TOO_SMALL(message: String = ""): Nothing = error("OPUS_BUFFER_TOO_SMALL : $message")
 
     /**
      * An public error was detected
@@ -64,6 +70,8 @@ object OpusError {
      * The compressed data passed is corrupted
      */
     var OPUS_INVALID_PACKET = -4
+    @JsName("invalidPacket")
+    fun OPUS_INVALID_PACKET(): Nothing = error("Invalid Packet")
 
     /**
      * Invalid/unsupported request number

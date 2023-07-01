@@ -98,7 +98,7 @@ class OpusRepacketizer {
         val ret: Int
         /* Set of check ToC */
         if (len < 1) {
-            return OpusError.OPUS_INVALID_PACKET
+            return OpusError.OPUS_INVALID_PACKET()
         }
 
         if (this.numFrames == 0) {
@@ -106,16 +106,16 @@ class OpusRepacketizer {
             this.framesize = OpusPacketInfo.getNumSamplesPerFrame(data, data_ptr, 8000)
         } else if (this.toc and 0xFC != data[data_ptr] and 0xFC) {
             /*fprintf(stderr, "toc mismatch: 0x%x vs 0x%x\n", rp.toc, data[0]);*/
-            return OpusError.OPUS_INVALID_PACKET
+            return OpusError.OPUS_INVALID_PACKET()
         }
         curr_nb_frames = OpusPacketInfo.getNumFrames(data, data_ptr, len)
         if (curr_nb_frames < 1) {
-            return OpusError.OPUS_INVALID_PACKET
+            return OpusError.OPUS_INVALID_PACKET()
         }
 
         /* Check the 120 ms maximum packet size */
         if ((curr_nb_frames + this.numFrames) * this.framesize > 960) {
-            return OpusError.OPUS_INVALID_PACKET
+            return OpusError.OPUS_INVALID_PACKET()
         }
 
         ret = OpusPacketInfo.opus_packet_parse_impl(
@@ -197,7 +197,7 @@ class OpusRepacketizer {
 
         if (begin < 0 || begin >= end || end > this.numFrames) {
             /*fprintf(stderr, "%d %d %d\n", begin, end, rp.nb_frames);*/
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
         count = end - begin
 
@@ -212,7 +212,7 @@ class OpusRepacketizer {
             /* Code 0 */
             tot_size += this.len[0] + 1
             if (tot_size > maxlen) {
-                return OpusError.OPUS_BUFFER_TOO_SMALL
+                return OpusError.OPUS_BUFFER_TOO_SMALL()
             }
             data[ptr++] = (this.toc and 0xFC).toByte()
         } else if (count == 2) {
@@ -220,14 +220,14 @@ class OpusRepacketizer {
                 /* Code 1 */
                 tot_size += 2 * this.len[0] + 1
                 if (tot_size > maxlen) {
-                    return OpusError.OPUS_BUFFER_TOO_SMALL
+                    return OpusError.OPUS_BUFFER_TOO_SMALL()
                 }
                 data[ptr++] = (this.toc and 0xFC or 0x1).toByte()
             } else {
                 /* Code 2 */
                 tot_size += this.len[0].toInt() + this.len[1].toInt() + 2 + if (this.len[0] >= 252) 1 else 0
                 if (tot_size > maxlen) {
-                    return OpusError.OPUS_BUFFER_TOO_SMALL
+                    return OpusError.OPUS_BUFFER_TOO_SMALL()
                 }
                 data[ptr++] = (this.toc and 0xFC or 0x2).toByte()
                 ptr += OpusPacketInfo.encode_size(this.len[0].toInt(), data, ptr)
@@ -264,14 +264,14 @@ class OpusRepacketizer {
                 tot_size += this.len[count - 1].toInt()
 
                 if (tot_size > maxlen) {
-                    return OpusError.OPUS_BUFFER_TOO_SMALL
+                    return OpusError.OPUS_BUFFER_TOO_SMALL()
                 }
                 data[ptr++] = (this.toc and 0xFC or 0x3).toByte()
                 data[ptr++] = (count or 0x80).toByte()
             } else {
                 tot_size += count * this.len[0] + 2
                 if (tot_size > maxlen) {
-                    return OpusError.OPUS_BUFFER_TOO_SMALL
+                    return OpusError.OPUS_BUFFER_TOO_SMALL()
                 }
                 data[ptr++] = (this.toc and 0xFC or 0x3).toByte()
                 data[ptr++] = count.toByte()
@@ -416,12 +416,12 @@ class OpusRepacketizer {
             val rp = OpusRepacketizer()
             val ret: Int
             if (len < 1) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             if (len == new_len) {
                 return OpusError.OPUS_OK
             } else if (len > new_len) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             rp.Reset()
             /* Moving payload to the end of the packet so we can do in-place padding */
@@ -452,7 +452,7 @@ class OpusRepacketizer {
         fun unpadPacket(data: ByteArray, data_offset: Int, len: Int): Int {
             var ret: Int
             if (len < 1) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
 
             val rp = OpusRepacketizer()
@@ -496,19 +496,19 @@ class OpusRepacketizer {
             val amount: Int
 
             if (len < 1) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             if (len == new_len) {
                 return OpusError.OPUS_OK
             } else if (len > new_len) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             amount = new_len - len
             /* Seek to last stream */
             s = 0
             while (s < nb_streams - 1) {
                 if (len <= 0) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    return OpusError.OPUS_INVALID_PACKET()
                 }
                 count = OpusPacketInfo.opus_packet_parse_impl(
                     data, data_offset, len, 1, dummy_toc, null, 0,
@@ -554,7 +554,7 @@ class OpusRepacketizer {
             var dst_len: Int
 
             if (len < 1) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
             dst = data_offset
             dst_len = 0
@@ -564,7 +564,7 @@ class OpusRepacketizer {
                 var ret: Int
                 val self_delimited = (if (s != nb_streams) 1 else 0) - 1
                 if (len <= 0) {
-                    return OpusError.OPUS_INVALID_PACKET
+                    return OpusError.OPUS_INVALID_PACKET()
                 }
                 rp.Reset()
                 ret = OpusPacketInfo.opus_packet_parse_impl(

@@ -149,7 +149,7 @@ internal class CeltDecoder {
         }
         this.downsample = CeltCommon.resampling_factor(sampling_rate)
         return if (this.downsample == 0) {
-            OpusError.OPUS_BAD_ARG
+            OpusError.OPUS_BAD_ARG()
         } else {
             OpusError.OPUS_OK
         }
@@ -157,7 +157,7 @@ internal class CeltDecoder {
 
     private fun opus_custom_decoder_init(mode: CeltMode, channels: Int): Int {
         if (channels < 0 || channels > 2) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         if (this == null) {
@@ -601,13 +601,13 @@ internal class CeltDecoder {
                 LM++
             }
             if (LM > mode!!.maxLM) {
-                return OpusError.OPUS_BAD_ARG
+                return OpusError.OPUS_BAD_ARG()
             }
         }
         M = 1 shl LM
 
         if (len < 0 || len > 1275 || pcm == null) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG("len=$len")
         }
 
         N = M * mode!!.shortMdctSize

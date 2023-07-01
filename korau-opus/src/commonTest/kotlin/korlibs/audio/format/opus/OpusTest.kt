@@ -1,8 +1,11 @@
 package korlibs.audio.format.opus
 
+import korlibs.audio.format.*
+import korlibs.audio.sound.*
 import korlibs.io.async.*
 import korlibs.io.stream.*
 import korlibs.crypto.encoding.*
+import korlibs.io.file.std.*
 import kotlin.test.*
 
 class OpusTest {
@@ -50,9 +53,24 @@ class OpusTest {
 			"sQc44eEK/Bb0IzlokzjwLaO7vH+sjQ==".fromBase64()
 
 	@Test
-	@Ignore
 	fun name() = suspendTest {
 		val data = Opus.decode(smallFile.openAsync())!!
 		println(data)
 	}
+
+    @Test
+    fun test2() = suspendTest {
+        val sound = resourcesVfs["opus1.opus"].readSound(Opus.toProps())
+        val data = sound.toAudioData()
+        println(data)
+    }
+
+    @Test
+    fun test3() = suspendTest {
+        val sound = resourcesVfs["opus1.opus"].readSound(Opus.toProps())
+        val data = sound.toAudioData()
+        println(data)
+    }
+
+    fun AudioFormat.toProps(): AudioDecodingProps = AudioDecodingProps(formats = this)
 }

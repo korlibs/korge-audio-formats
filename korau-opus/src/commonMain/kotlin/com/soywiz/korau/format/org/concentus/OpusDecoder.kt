@@ -131,7 +131,7 @@ class OpusDecoder {
         var ret: Int
 
         if (Fs != 48000 && Fs != 24000 && Fs != 16000 && Fs != 12000 && Fs != 8000 || channels != 1 && channels != 2) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
         this.reset()
 
@@ -246,7 +246,7 @@ class OpusDecoder {
         F2_5 = F5 shr 1
         if (frame_size < F2_5) {
 
-            return OpusError.OPUS_BUFFER_TOO_SMALL
+            return OpusError.OPUS_BUFFER_TOO_SMALL()
         }
         /* Limit frame_size to avoid excessive stack allocations. */
         frame_size = Inlines.IMIN(frame_size, this.sampleRate / 25 * 3)
@@ -321,7 +321,7 @@ class OpusDecoder {
         if (audiosize > frame_size) {
             /*fprintf(stderr, "PCM buffer too small: %d vs %d (mode = %d)\n", audiosize, frame_size, mode);*/
 
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         } else {
             frame_size = audiosize
         }
@@ -616,11 +616,13 @@ class OpusDecoder {
         // fixme: make sure these values can fit in an int16
         val size = ShortArray(48)
         if (decode_fec < 0 || decode_fec > 1) {
-            return OpusError.OPUS_BAD_ARG
+            error("Bad Arg")
+            return OpusError.OPUS_BAD_ARG()
         }
         /* For FEC/PLC, frame_size has to be to have a multiple of 2.5 ms */
         if ((decode_fec != 0 || len == 0 || data == null) && frame_size % (this.sampleRate / 400) != 0) {
-            return OpusError.OPUS_BAD_ARG
+            error("Bad Arg")
+            return OpusError.OPUS_BAD_ARG()
         }
         if (len == 0 || data == null) {
             var pcm_count = 0
@@ -644,7 +646,8 @@ class OpusDecoder {
             this.lastPacketDuration = pcm_count
             return pcm_count
         } else if (len < 0) {
-            return OpusError.OPUS_BAD_ARG
+            error("Bad Arg")
+            return OpusError.OPUS_BAD_ARG()
         }
 
         packet_mode = OpusPacketInfo.getEncoderMode(data, data_ptr)
@@ -718,7 +721,7 @@ class OpusDecoder {
         }
 
         if (count * packet_frame_size > frame_size) {
-            return OpusError.OPUS_BUFFER_TOO_SMALL
+            return OpusError.OPUS_BUFFER_TOO_SMALL("${count * packet_frame_size} > ${frame_size}")
         }
 
         /* Update the state as the last step to avoid updating it on an invalid packet */

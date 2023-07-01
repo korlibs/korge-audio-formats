@@ -207,7 +207,7 @@ internal class CeltEncoder {
         channels: Int
     ): Int {
         if (channels < 0 || channels > 2) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         if (this == null || mode == null) {
@@ -494,7 +494,7 @@ internal class CeltEncoder {
         end = this.end
         tf_estimate = 0
         if (nbCompressedBytes < 2 || pcm == null) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
 
         frame_size *= this.upsample
@@ -506,7 +506,7 @@ internal class CeltEncoder {
             LM++
         }
         if (LM > mode!!.maxLM) {
-            return OpusError.OPUS_BAD_ARG
+            return OpusError.OPUS_BAD_ARG()
         }
         M = 1 shl LM
         N = M * mode!!.shortMdctSize
