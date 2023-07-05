@@ -1,0 +1,6 @@
+name: "korau-flac"
+plugins:
+  #- serialization
+dependencies:
+- "maven::common::com.soywiz.korlibs.korge2:korge"
+#- "maven::jvm::com.soywiz.org.concertus:concentus-java:0.0.1-SNAPSHOT"
