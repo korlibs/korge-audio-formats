@@ -1,4 +1,5 @@
 dependencies:
+- ./korau-flac
 - ./korau-opus
 - ./korau-mod
 - ./korau-midi
