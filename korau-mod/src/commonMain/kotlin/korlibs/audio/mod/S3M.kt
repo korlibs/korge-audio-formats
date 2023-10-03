@@ -12,6 +12,7 @@ import korlibs.io.file.VfsFile
 import korlibs.io.stream.AsyncStream
 import korlibs.io.stream.readBytesExact
 import korlibs.io.stream.sliceStart
+import korlibs.math.*
 import kotlin.random.Random
 
 /*

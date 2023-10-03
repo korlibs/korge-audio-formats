@@ -1,7 +1,3 @@
-import korlibs.time.measureTime
-import korlibs.time.milliseconds
-import korlibs.time.seconds
-import korlibs.time.toTimeString
 import korlibs.audio.format.defaultAudioFormats
 import korlibs.audio.format.opus.*
 import korlibs.audio.mod.MOD
@@ -20,6 +16,7 @@ import korlibs.korge.view.SContainer
 import korlibs.korge.view.addUpdater
 import korlibs.io.async.launchImmediately
 import korlibs.io.file.std.resourcesVfs
+import korlibs.time.*
 
 class MainMODScene : Scene() {
     override suspend fun SContainer.sceneMain() {
@@ -41,7 +38,7 @@ class MainMODScene : Scene() {
         var channel = sound.play(times = infinitePlaybackTimes)
         //val channel = sound.play(times = 2.playbackTimes)
         lateinit var timer: UIText
-        uiVerticalStack(width = 400f) {
+        uiVerticalStack(width = 400.0) {
             uiComboBox(items = soundsFolder.listNames().filter { it.substringAfterLast('.').lowercase() in defaultAudioFormats.extensions }).also {
                 it.onSelectionUpdate { box ->
                     launchImmediately {

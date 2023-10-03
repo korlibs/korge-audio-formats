@@ -1,16 +1,5 @@
 package korlibs.audio.format.opus
 
-import korlibs.audio.format.org.concentus.*
-import korlibs.audio.format.org.concentus.internal.*
-import korlibs.audio.format.org.gragravarr.opus.*
-import korlibs.io.async.*
-import korlibs.io.lang.*
-import korlibs.io.stream.*
-import korlibs.io.file.*
-import korlibs.io.lang.IOException
-import kotlinx.coroutines.*
-import java.io.*
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -20,6 +9,17 @@ import java.io.*
 /**
  * @author lostromb
  */
+/*
+import korlibs.audio.format.org.concentus.*
+import korlibs.audio.format.org.concentus.internal.*
+import korlibs.io.async.*
+import korlibs.io.lang.*
+import korlibs.io.stream.*
+import korlibs.io.file.*
+import korlibs.io.lang.IOException
+import kotlinx.coroutines.*
+import java.io.*
+
 object Program {
 	@JvmStatic fun main(args: Array<String>) {
 		test()
@@ -157,3 +157,4 @@ object Program {
 /// </summary>
 /// <param name="input"></param>
 /// <returns></returns>
+*/
