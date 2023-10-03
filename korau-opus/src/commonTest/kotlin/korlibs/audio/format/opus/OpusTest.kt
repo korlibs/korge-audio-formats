@@ -4,7 +4,7 @@ import korlibs.audio.format.*
 import korlibs.audio.sound.*
 import korlibs.io.async.*
 import korlibs.io.stream.*
-import korlibs.crypto.encoding.*
+import korlibs.encoding.*
 import korlibs.io.file.std.*
 import kotlin.test.*
 

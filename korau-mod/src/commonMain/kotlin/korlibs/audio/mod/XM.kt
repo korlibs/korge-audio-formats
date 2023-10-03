@@ -14,6 +14,7 @@ import korlibs.audio.sound.nativeSoundProvider
 import korlibs.io.file.VfsFile
 import korlibs.io.stream.AsyncStream
 import korlibs.io.stream.readBytesExact
+import korlibs.math.*
 import kotlin.math.pow
 import kotlin.random.Random
 
