@@ -66,6 +66,17 @@ class OpusTest {
         val sound = resourcesVfs["8Khz-Mono.opus"].readMusic(OPUS.toProps())
         val data = sound.toAudioData()
         println(data)
+        assertEquals("AudioData(rate=48000, channels=2, samples=839040)", "$data")
+    }
+
+    @Test
+    fun testStereoIssue() = suspendTest {
+        val sound = resourcesVfs["Snowland.opus"].readMusic(OPUS.toProps())
+        val data = sound.toAudioData()
+
+        // @TODO: Compare against an Acoustic fingerprint (to support small changes due to implementation rounding errors): https://en.wikipedia.org/wiki/Acoustic_fingerprint
+        // The number of samples should be fixed al least though
+        assertEquals("AudioData(rate=48000, channels=2, samples=566400)", "$data")
     }
 
     fun AudioFormat.toProps(): AudioDecodingProps = AudioDecodingProps(formats = this)

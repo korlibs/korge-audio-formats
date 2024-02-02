@@ -84,7 +84,8 @@ class OpusOggProcessor(
                     preSkip,
                     inputSampleRate,
                     outputGain,
-                    channelMap)
+                    channelMap
+                )
 
                 //println("head=$head")
 
@@ -121,9 +122,8 @@ class OpusOggProcessor(
                             val packetData = pending.toByteArray()
                             pending.clear()
 
-                            val read =
-                                decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / ichannels, false)
-                            samples.write(AudioSamplesInterleaved(ichannels, read, spcm))
+                            val read = decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / ichannels, false)
+                            samples.write(AudioSamplesInterleaved(ichannels, read * ichannels, spcm))
                             samplesDecoded += read
                             //println("READ: $read")
                         }
