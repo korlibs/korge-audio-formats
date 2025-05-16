@@ -9,6 +9,7 @@ import korlibs.io.stream.*
 import korlibs.math.*
 import korlibs.memory.*
 import korlibs.time.*
+import kotlin.time.*
 
 object FLAC : FlacAudioFormatBase()
 
@@ -76,7 +77,7 @@ open class FlacAudioFormatBase : AudioFormat("flac") {
             for (ch in 0 until streamInfo.numChannels) {
                 val tempCh = temp[ch]
                 for (n in 0 until read) {
-                    deque.write(ch, tempCh[n].toShortClamped())
+                    deque.write(ch, AudioSample(tempCh[n].toShortClamped()))
                 }
             }
         }
@@ -90,6 +91,10 @@ open class FlacAudioFormatBase : AudioFormat("flac") {
             val len = deque.read(out, offset, length)
             //println("read.len=$len")
             return len
+        }
+
+        override suspend fun seek(position: Duration) {
+            currentPositionInSamples = (position.seconds * rate).toLong()
         }
     }
 }

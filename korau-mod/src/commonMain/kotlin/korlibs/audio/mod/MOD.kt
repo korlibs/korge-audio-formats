@@ -13,6 +13,7 @@ import korlibs.io.stream.AsyncStream
 import korlibs.io.stream.readBytesExact
 import korlibs.io.stream.sliceStart
 import kotlin.math.pow
+import kotlin.time.*
 
 /*
   https://github.com/electronoora/webaudio-mod-player

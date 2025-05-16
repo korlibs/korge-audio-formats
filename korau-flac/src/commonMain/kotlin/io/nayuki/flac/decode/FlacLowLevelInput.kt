@@ -29,7 +29,7 @@ import korlibs.io.lang.*
  *
  * @see FrameDecoder
  */
-interface FlacLowLevelInput : Closeable {
+interface FlacLowLevelInput : AutoCloseable {
     /*---- Stream position ----*/ // Returns the total number of bytes in the FLAC file represented by this input stream.
     // This number should not change for the lifetime of this object. Implementing this is optional;
     // it's intended to support blind seeking without the use of seek tables, such as binary searching

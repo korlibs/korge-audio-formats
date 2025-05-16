@@ -52,7 +52,7 @@ import korlibs.memory.*
  * @see FrameDecoder
  * @see FlacLowLevelInput
  */
-class FlacDecoder(file: SyncStream) : Closeable {
+class FlacDecoder(file: SyncStream) : AutoCloseable {
     /*---- Fields ----*/
     var streamInfo: StreamInfo? = null
     var seekTable: SeekTable? = null

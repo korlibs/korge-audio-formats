@@ -17,6 +17,7 @@ import korlibs.io.stream.readBytesExact
 import korlibs.math.*
 import kotlin.math.pow
 import kotlin.random.Random
+import kotlin.time.*
 
 /*
   https://github.com/electronoora/webaudio-mod-player

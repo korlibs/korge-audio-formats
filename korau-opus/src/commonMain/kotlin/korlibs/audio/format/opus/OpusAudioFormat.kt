@@ -7,6 +7,7 @@ import korlibs.io.lang.*
 import korlibs.io.stream.*
 import korlibs.memory.*
 import korlibs.time.*
+import kotlin.time.*
 
 object OPUS : OpusAudioFormatBase()
 
@@ -87,7 +88,11 @@ open class OpusAudioFormatBase : AudioFormat("opus") {
             }
             return read
 		}
-	}
+
+        override suspend fun seek(position: Duration) {
+            currentPositionInSamples = (position.seconds * rate).toLong()
+        }
+    }
 }
 
 private fun ByteArray.lastIndexOf(sub: ByteArray, starting: Int = 0): Int = array_lastIndexOf(starting, size, sub.size) { n, m -> this[n] == sub[m] }

@@ -14,6 +14,7 @@ import korlibs.io.stream.readBytesExact
 import korlibs.io.stream.sliceStart
 import korlibs.math.*
 import kotlin.random.Random
+import kotlin.time.*
 
 /*
   (c) 2012-2021 Noora Halme et al. (see AUTHORS)

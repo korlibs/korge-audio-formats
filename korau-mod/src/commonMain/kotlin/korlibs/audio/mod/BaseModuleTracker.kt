@@ -5,15 +5,12 @@ import korlibs.time.seconds
 import korlibs.memory.*
 import korlibs.audio.format.AudioDecodingProps
 import korlibs.audio.format.AudioFormat
-import korlibs.audio.sound.AudioSamples
-import korlibs.audio.sound.AudioStream
-import korlibs.audio.sound.NativeSoundProvider
-import korlibs.audio.sound.Sound
-import korlibs.audio.sound.nativeSoundProvider
+import korlibs.audio.sound.*
 import korlibs.io.file.VfsFile
 import korlibs.io.stream.AsyncStream
 import korlibs.io.stream.readAll
 import kotlin.math.min
+import kotlin.time.*
 
 abstract class BaseModuleTracker {
     abstract class Format(vararg exts: String) : AudioFormat(*exts) {
@@ -114,7 +111,7 @@ abstract class BaseModuleTracker {
                 _currentPositionInSamples += length
                 val l = fch[0]
                 val r = fch[1]
-                for (n in 0 until length) out.setFloatStereo(offset + n, l[n], r[n])
+                for (n in 0 until length) out.setStereo(offset + n, AudioSample(l[n]), AudioSample(r[n]))
                 return length
             }
 
@@ -122,6 +119,9 @@ abstract class BaseModuleTracker {
                 return createAudioStream()
             }
 
+            override suspend fun seek(position: Duration) {
+                currentPositionInSamples = (position.seconds * samplerate).toLong()
+            }
         }
     }
 }

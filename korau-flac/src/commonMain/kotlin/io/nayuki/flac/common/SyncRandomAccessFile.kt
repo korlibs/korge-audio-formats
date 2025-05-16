@@ -1,8 +1,6 @@
 package io.nayuki.flac.common
 
-import korlibs.io.lang.*
-
-class SyncRandomAccessFile(val file: SyncFile, val mode: String) : Closeable {
+class SyncRandomAccessFile(val file: SyncFile, val mode: String) : AutoCloseable {
     fun length(): Long = TODO()
     fun seek(pos: Long) {
         TODO()

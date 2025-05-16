@@ -123,7 +123,7 @@ class OpusOggProcessor(
                             pending.clear()
 
                             val read = decoder.decode(packetData, 0, packetData.size, spcm, 0, spcm.size / ichannels, false)
-                            samples.write(AudioSamplesInterleaved(ichannels, read * ichannels, spcm))
+                            samples.write(AudioSamplesInterleaved(ichannels, read * ichannels, AudioSampleArray(spcm)))
                             samplesDecoded += read
                             //println("READ: $read")
                         }
